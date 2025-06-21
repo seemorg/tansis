@@ -32,13 +32,13 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         dir={shouldBeRtl ? "rtl" : "ltr"}
         className={cn(
           // Base styles
-          "w-full p-4 text-xl leading-relaxed resize-none rounded-2xl shadow-inner border border-neutral-200 transition-colors",
+          "w-full p-3 sm:p-4 text-lg sm:text-xl leading-relaxed resize-none rounded-lg sm:rounded-2xl shadow-inner border border-neutral-200 transition-colors",
           "focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none",
           // Fixed height to prevent layout shift
-          "min-h-[120px]",
+          "min-h-[100px] sm:min-h-[120px]",
           // Variant-specific styles
           isInput
-            ? "bg-white/80 backdrop-blur"
+            ? "bg-white border-neutral-300 sm:bg-white/80 sm:backdrop-blur"
             : "bg-neutral-50 cursor-text",
           // Text direction and font styles
           shouldBeRtl ? "text-right" : "text-left",

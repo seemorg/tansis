@@ -40,11 +40,11 @@ export function ExamplesSection({ style, onExampleClick, isSwapped = false }: Ex
   const styleExamples = examples[style] || [];
 
   return (
-    <div className="mt-4">
-      <h3 className="text-sm font-medium text-neutral-600 mb-2">
+    <div className="mt-3 sm:mt-4">
+      <h3 className="text-xs sm:text-sm font-medium text-neutral-600 mb-2">
         Try these examples:
       </h3>
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         {styleExamples.map((example, index) => {
           const displayText = isSwapped ? example.roman : example.arabic;
           const clickHandler = isSwapped 
@@ -55,9 +55,9 @@ export function ExamplesSection({ style, onExampleClick, isSwapped = false }: Ex
             <button
               key={index}
               onClick={clickHandler}
-              className="flex-1 p-3 bg-neutral-50 rounded-lg border border-neutral-200 hover:border-[#9d5148] hover:bg-neutral-100 transition-all duration-200 text-center cursor-pointer"
+              className="flex-1 p-2 sm:p-3 bg-neutral-50 rounded-lg border border-neutral-200 hover:border-[#9d5148] hover:bg-neutral-100 transition-all duration-200 text-center cursor-pointer"
             >
-              <div className={`text-neutral-800 text-sm ${isSwapped ? '' : 'font-arabic'}`}>
+              <div className={`text-neutral-800 text-xs sm:text-sm ${isSwapped ? '' : 'font-arabic'}`}>
                 {displayText}
               </div>
             </button>

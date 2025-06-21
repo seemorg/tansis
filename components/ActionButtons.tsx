@@ -80,30 +80,44 @@ export function ActionButtons({
           variant="outline"
           onClick={handleCopy}
           disabled={disabled || !copyText.trim()}
-          className="h-8 w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
+          className="h-7 w-7 sm:h-8 sm:w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
         >
-          <Clipboard className="h-4 w-4" />
+          <Clipboard className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
         <Button
           size="sm"
           variant="outline"
           onClick={handleShare}
           disabled={disabled || !shareText.trim()}
-          className="h-8 w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
+          className="h-7 w-7 sm:h-8 sm:w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
         >
-          <Share2 className="h-4 w-4" />
+          <Share2 className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
       </div>
     );
   }
 
   return (
-    <div className="flex gap-3 justify-center pt-6">
+    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center pt-4 sm:pt-6">
+      {/* Convert button first on mobile, last on desktop */}
+      <Button
+        onClick={onTransliterate}
+        disabled={loading}
+        className={cn(
+          "inline-flex gap-2 px-4 sm:px-5 py-2 rounded-lg sm:rounded-full font-medium shadow-sm cursor-pointer text-sm order-1 sm:order-3",
+          "bg-[#9d5148] hover:bg-[#8a463d] focus-visible:outline text-white"
+        )}
+      >
+        <Play className="h-4 w-4" />
+        <span className="hidden sm:inline">{loading ? "Transliterating..." : "Transliterate"}</span>
+        <span className="sm:hidden">{loading ? "Converting..." : "Convert"}</span>
+      </Button>
+
       <Button
         variant="outline"
         onClick={onClear}
         disabled={disabled}
-        className="inline-flex gap-2 px-5 py-2 rounded-full font-medium cursor-pointer"
+        className="inline-flex gap-2 px-4 sm:px-5 py-2 rounded-lg sm:rounded-full font-medium cursor-pointer text-sm order-2 sm:order-1"
       >
         <Trash2 className="h-4 w-4" />
         Clear
@@ -113,22 +127,10 @@ export function ActionButtons({
         variant="outline"
         onClick={onSwap}
         disabled={disabled}
-        className="inline-flex gap-2 px-5 py-2 rounded-full font-medium cursor-pointer"
+        className="inline-flex gap-2 px-4 sm:px-5 py-2 rounded-lg sm:rounded-full font-medium cursor-pointer text-sm order-3 sm:order-2"
       >
         <ArrowUpDown className="h-4 w-4" />
         Swap
-      </Button>
-
-      <Button
-        onClick={onTransliterate}
-        disabled={loading}
-        className={cn(
-          "inline-flex gap-2 px-5 py-2 rounded-full font-medium shadow-sm cursor-pointer",
-          "bg-[#9d5148] hover:bg-[#8a463d] focus-visible:outline text-white"
-        )}
-      >
-        <Play className="h-4 w-4" />
-        {loading ? "Transliterating..." : "Transliterate"}
       </Button>
     </div>
   );

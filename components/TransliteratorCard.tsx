@@ -35,6 +35,8 @@ export function TransliteratorCard({
   isSwapped = false,
   setIsSwapped,
 }: TransliteratorCardProps) {
+  // Suppress unused variable warning - this prop is used in parent components
+  void onReverseTransliterate;
   const handleSwap = () => {
     // Simply swap the contents
     const temp = arabic;
@@ -53,26 +55,26 @@ export function TransliteratorCard({
   const canTransliterate = !loading;
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl mx-auto">
       <div
-        className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-8"
+        className="bg-transparent sm:bg-white/70 sm:backdrop-blur-sm rounded-none sm:rounded-2xl md:rounded-3xl shadow-none sm:shadow-lg p-0 sm:p-6 md:p-8"
       >
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
           <StyleDropdown value={style} onValueChange={setStyle} />
-          <div className="text-lg font-semibold text-neutral-700">
+          <div className="text-base sm:text-lg font-semibold text-neutral-700 hidden sm:block">
             Usul Transliteration
           </div>
         </div>
 
         {/* Input Area */}
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <TextArea
             variant="input"
             value={arabic}
             onChange={setArabic}
             placeholder={isSwapped ? "Enter romanized text here..." : "اكتب النص العربي هنا..."}
-            className="min-h-[120px]"
+            className="min-h-[100px] sm:min-h-[120px]"
             isSwapped={isSwapped}
           />
 
@@ -111,7 +113,7 @@ export function TransliteratorCard({
                 onChange={() => {}}
                 readOnly
                 placeholder={isSwapped ? "النص العربي سيظهر هنا..." : "Transliteration will appear here..."}
-                className="min-h-[120px]"
+                className="min-h-[100px] sm:min-h-[120px]"
                 isSwapped={isSwapped}
               />
             </motion.div>

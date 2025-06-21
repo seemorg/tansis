@@ -20,12 +20,12 @@ const styleDescriptions: Record<string, string> = {
 };
 
 type Props = {
-  params: { style: string };
+  params: Promise<{ style: string }>;
   children: React.ReactNode;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { style } = params;
+  const { style } = await params;
   
   if (!validStyles[style]) {
     return {
@@ -56,8 +56,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function StyleLayout({ children, params }: Props) {
-  const { style } = params;
+export default async function StyleLayout({ children, params }: Props) {
+  const { style } = await params;
   
   if (!validStyles[style]) {
     notFound();

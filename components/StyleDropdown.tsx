@@ -38,13 +38,13 @@ export function StyleDropdown({ value, onValueChange, disabled = false }: StyleD
           role="combobox"
           aria-expanded={open}
           disabled={disabled}
-          className="w-48 justify-between text-sm font-medium cursor-pointer"
+          className="w-full sm:w-48 justify-between text-xs sm:text-sm font-medium cursor-pointer"
         >
           {getStyleLabel(value)}
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-48 p-0">
+      <PopoverContent className="w-full sm:w-48 p-0">
         <Command>
           <CommandInput placeholder="Search style..." />
           <CommandList>
