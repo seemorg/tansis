@@ -27,17 +27,27 @@ export async function POST(req: NextRequest) {
     let transliteration = "";
 
     if (style === TransliterationStyle.SHARIASOURCE && !reverse) {
-      // SHARIAsource with single call and regex cleanup
-      const completion = await openai.chat.completions.create({
-        model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
-        temperature: 0,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ],
-      });
+      // SHARIAsource with retry logic and regex cleanup
+      const temperatures = [0, 0.3, 0.7];
+      let result = "";
+      
+      for (const temperature of temperatures) {
+        const completion = await openai.chat.completions.create({
+          model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
+          temperature,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt }
+          ],
+        });
 
-      const result = completion.choices[0]?.message.content?.trim() ?? "";
+        result = completion.choices[0]?.message.content?.trim() ?? "";
+        
+        // If we get a non-empty result, break out of the loop
+        if (result.length > 0) {
+          break;
+        }
+      }
       
       // Remove asterisks used for italicization in the output
       transliteration = result.replace(/\*/g, '');
