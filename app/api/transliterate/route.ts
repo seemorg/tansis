@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { openai } from '@/lib/openai';
-import { buildPrompt } from '@/lib/styles';
+import { buildPrompt, getAllStyles } from '@/lib/styles';
 import { TransliterationStyle } from '@/types/transliteration';
 
 export async function POST(req: NextRequest) {
@@ -71,4 +71,54 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  const styles = getAllStyles();
+  
+  return NextResponse.json({
+    message: "Arabic Transliteration API",
+    version: "1.0.0",
+    endpoints: {
+      "POST /api/transliterate": {
+        description: "Transliterate Arabic text to Latin script",
+        body: {
+          text: "string (required) - Arabic text to transliterate",
+          style: "string (required) - Transliteration style",
+          reverse: "boolean (optional) - Convert Latin to Arabic, default: false"
+        },
+        response: {
+          transliteration: "string - The transliterated text"
+        }
+      },
+      "POST /api/transliterate/batch": {
+        description: "Batch transliterate multiple texts",
+        body: {
+          texts: "array of strings (required) - Arabic texts to transliterate",
+          style: "string (required) - Transliteration style",
+          reverse: "boolean (optional) - Convert Latin to Arabic, default: false"
+        },
+        response: {
+          results: "array of objects with text and transliteration fields"
+        }
+      }
+    },
+    availableStyles: styles,
+    examples: {
+      single: {
+        url: "POST /api/transliterate",
+        body: {
+          text: "السلام عليكم",
+          style: "IJMES"
+        }
+      },
+      batch: {
+        url: "POST /api/transliterate/batch", 
+        body: {
+          texts: ["السلام عليكم", "مرحبا"],
+          style: "IJMES"
+        }
+      }
+    }
+  });
 }
