@@ -11,28 +11,28 @@ interface ExamplesSectionProps {
 const examples = {
   [TransliterationStyle.IJMES]: [
     { arabic: "السلام عليكم", roman: "al-salām ʿalaykum" },
-    { arabic: "مرحبا", roman: "marḥaban" },
-    { arabic: "شكرا لك", roman: "shukran lak" },
+    { arabic: "ابن سينا", roman: "ibn sīnā" },
+    { arabic: "الأشباه والنظائر", roman: "al-ashbāh wa-al-naẓāʾir" },
   ],
   [TransliterationStyle.ALALC]: [
     { arabic: "السلام عليكم", roman: "al-salām ʻalaykum" },
-    { arabic: "مرحبا", roman: "marḥaban" },
-    { arabic: "شكرا لك", roman: "shukran lak" },
+    { arabic: "ابن سينا", roman: "ibn sīnā" },
+    { arabic: "الأشباه والنظائر", roman: "al-ashbāh wa-al-naẓāʼir" },
   ],
   [TransliterationStyle.DIN]: [
     { arabic: "السلام عليكم", roman: "as-salâm ʿalaikum" },
-    { arabic: "مرحبا", roman: "marḥaban" },
-    { arabic: "شكرا لك", roman: "šukran lak" },
+    { arabic: "ابن سينا", roman: "ibn sînâ" },
+    { arabic: "الأشباه والنظائر", roman: "al-ašbâh wa-an-naẓâ'ir" },
   ],
   [TransliterationStyle.BUCKWALTER]: [
     { arabic: "السلام عليكم", roman: "AlslAm ElykM" },
-    { arabic: "مرحبا", roman: "mrHbA" },
-    { arabic: "شكرا لك", roman: "$krA lk" },
+    { arabic: "ابن سينا", roman: "Abn synA" },
+    { arabic: "الأشباه والنظائر", roman: "Al>$bAh wAlnZA}r" },
   ],
   [TransliterationStyle.CUSTOM]: [
     { arabic: "السلام عليكم", roman: "as-salaam alaykum" },
-    { arabic: "مرحبا", roman: "marhaban" },
-    { arabic: "شكرا لك", roman: "shukran lak" },
+    { arabic: "ابن سينا", roman: "ibn sina" },
+    { arabic: "الأشباه والنظائر", roman: "al-ashbah wa-al-nazair" },
   ],
 };
 
@@ -42,7 +42,7 @@ export function ExamplesSection({ style, onExampleClick, isSwapped = false }: Ex
   return (
     <div className="mt-3 sm:mt-4">
       <h3 className="text-xs sm:text-sm font-medium text-neutral-600 mb-2">
-        Try these examples:
+        Or try these examples:
       </h3>
       <div className="flex flex-col sm:flex-row gap-2">
         {styleExamples.map((example, index) => {
