@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 import { TextArea } from "./TextArea";
 import { StyleDropdown } from "./StyleDropdown";
 import { ActionButtons } from "./ActionButtons";
@@ -18,6 +18,8 @@ interface TransliteratorCardProps {
   onSubmit: () => void;
   onReverseTransliterate: () => void;
   loading: boolean;
+  isSwapped?: boolean;
+  setIsSwapped?: (swapped: boolean) => void;
 }
 
 export function TransliteratorCard({
@@ -30,11 +32,17 @@ export function TransliteratorCard({
   onSubmit,
   onReverseTransliterate,
   loading,
+  isSwapped = false,
+  setIsSwapped,
 }: TransliteratorCardProps) {
   const handleSwap = () => {
-    if (roman.trim()) {
-      onReverseTransliterate();
-    }
+    // Simply swap the contents
+    const temp = arabic;
+    setArabic(roman);
+    setRoman(temp);
+    
+    // Toggle the swapped state
+    setIsSwapped?.(!isSwapped);
   };
 
   const handleClear = () => {
@@ -66,13 +74,15 @@ export function TransliteratorCard({
             variant="input"
             value={arabic}
             onChange={setArabic}
-            placeholder="اكتب النص العربي هنا..."
+            placeholder={isSwapped ? "Enter romanized text here..." : "اكتب النص العربي هنا..."}
             className="min-h-[120px]"
+            isSwapped={isSwapped}
           />
 
           {/* Examples Section */}
           <ExamplesSection
             style={style}
+            isSwapped={isSwapped}
             onExampleClick={(arabicText, romanText) => {
               setArabic(arabicText);
               setRoman(romanText);
@@ -87,7 +97,7 @@ export function TransliteratorCard({
               className="my-3 text-neutral-400 cursor-pointer hover:text-neutral-600 transition-colors"
               onClick={handleSwap}
             >
-              <ArrowUpDown className="h-6 w-6" />
+              <ArrowLeftRight className="h-6 w-6" />
             </motion.div>
           </div>
 
@@ -104,8 +114,9 @@ export function TransliteratorCard({
                 value={roman}
                 onChange={() => {}}
                 readOnly
-                placeholder="Transliteration will appear here..."
+                placeholder={isSwapped ? "النص العربي سيظهر هنا..." : "Transliteration will appear here..."}
                 className="min-h-[120px]"
+                isSwapped={isSwapped}
               />
             </motion.div>
 

@@ -37,6 +37,7 @@ export default function StylePage() {
   const [arabic, setArabic] = useState("");
   const [roman, setRoman] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSwapped, setIsSwapped] = useState(false);
 
   const handleTransliterate = async (reverse = false) => {
     const inputText = reverse ? roman : arabic;
@@ -102,6 +103,8 @@ export default function StylePage() {
           onSubmit={() => handleTransliterate(false)}
           onReverseTransliterate={() => handleTransliterate(true)}
           loading={loading}
+          isSwapped={isSwapped}
+          setIsSwapped={setIsSwapped}
         />
       </div>
     </main>

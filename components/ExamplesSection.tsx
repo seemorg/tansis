@@ -5,6 +5,7 @@ import { TransliterationStyle } from "@/types/transliteration";
 interface ExamplesSectionProps {
   style: TransliterationStyle;
   onExampleClick: (arabicText: string, romanText: string) => void;
+  isSwapped?: boolean;
 }
 
 const examples = {
@@ -35,7 +36,7 @@ const examples = {
   ],
 };
 
-export function ExamplesSection({ style, onExampleClick }: ExamplesSectionProps) {
+export function ExamplesSection({ style, onExampleClick, isSwapped = false }: ExamplesSectionProps) {
   const styleExamples = examples[style] || [];
 
   return (
@@ -44,17 +45,24 @@ export function ExamplesSection({ style, onExampleClick }: ExamplesSectionProps)
         Try these examples:
       </h3>
       <div className="flex gap-2">
-        {styleExamples.map((example, index) => (
-          <button
-            key={index}
-            onClick={() => onExampleClick(example.arabic, example.roman)}
-            className="flex-1 p-3 bg-neutral-50 rounded-lg border border-neutral-200 hover:border-[#9d5148] hover:bg-neutral-100 transition-all duration-200 text-center cursor-pointer"
-          >
-            <div className="font-arabic text-neutral-800 text-sm">
-              {example.arabic}
-            </div>
-          </button>
-        ))}
+        {styleExamples.map((example, index) => {
+          const displayText = isSwapped ? example.roman : example.arabic;
+          const clickHandler = isSwapped 
+            ? () => onExampleClick(example.roman, example.arabic)
+            : () => onExampleClick(example.arabic, example.roman);
+          
+          return (
+            <button
+              key={index}
+              onClick={clickHandler}
+              className="flex-1 p-3 bg-neutral-50 rounded-lg border border-neutral-200 hover:border-[#9d5148] hover:bg-neutral-100 transition-all duration-200 text-center cursor-pointer"
+            >
+              <div className={`text-neutral-800 text-sm ${isSwapped ? '' : 'font-arabic'}`}>
+                {displayText}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

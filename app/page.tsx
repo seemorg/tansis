@@ -11,6 +11,7 @@ export default function Home() {
   const [roman, setRoman] = useState("");
   const [style, setStyle] = useState<TransliterationStyle>(defaultStyle);
   const [loading, setLoading] = useState(false);
+  const [isSwapped, setIsSwapped] = useState(false);
 
   const handleTransliterate = async (reverse = false) => {
     const inputText = reverse ? roman : arabic;
@@ -71,6 +72,8 @@ export default function Home() {
           onSubmit={() => handleTransliterate(false)}
           onReverseTransliterate={() => handleTransliterate(true)}
           loading={loading}
+          isSwapped={isSwapped}
+          setIsSwapped={setIsSwapped}
         />
       </div>
     </main>
