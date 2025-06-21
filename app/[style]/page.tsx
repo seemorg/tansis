@@ -1,16 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { useParams, notFound } from "next/navigation";
 import { TransliteratorCard } from "@/components/TransliteratorCard";
 import { StyleNavigation } from "@/components/StyleNavigation";
 import { TransliterationStyle } from "@/types/transliteration";
+import { getStyleLabel } from "@/lib/styles";
 
-export default function Home() {
-  const defaultStyle = TransliterationStyle.IJMES;
+const validStyles: Record<string, TransliterationStyle> = {
+  "ijmes": TransliterationStyle.IJMES,
+  "ala-lc": TransliterationStyle.ALALC,
+  "din-31635": TransliterationStyle.DIN,
+  "buckwalter": TransliterationStyle.BUCKWALTER,
+  "custom": TransliterationStyle.CUSTOM,
+};
+
+export default function StylePage() {
+  const params = useParams();
+  const styleParam = params.style as string;
+  
+  if (!styleParam || !validStyles[styleParam]) {
+    notFound();
+  }
+
+  const currentStyle = validStyles[styleParam];
+  const styleLabel = getStyleLabel(currentStyle);
 
   const [arabic, setArabic] = useState("");
   const [roman, setRoman] = useState("");
-  const [style, setStyle] = useState<TransliterationStyle>(defaultStyle);
   const [loading, setLoading] = useState(false);
 
   const handleTransliterate = async (reverse = false) => {
@@ -24,7 +41,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text: inputText, style, reverse }),
+        body: JSON.stringify({ text: inputText, style: currentStyle, reverse }),
       });
 
       if (!response.ok) {
@@ -56,10 +73,10 @@ export default function Home() {
       <div className="relative z-10 w-full max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-neutral-800 mb-2">
-            Usul Transliteration
+            {styleLabel} Transliterator
           </h1>
           <p className="text-neutral-600">
-            Convert Arabic text to Latin script using various transliteration standards
+            Convert Arabic text to Latin script using {styleLabel} standards
           </p>
         </div>
         <StyleNavigation />
@@ -68,8 +85,9 @@ export default function Home() {
           setArabic={setArabic}
           roman={roman}
           setRoman={setRoman}
-          style={style}
-          setStyle={setStyle}
+          style={currentStyle}
+          setStyle={() => {}} // Disabled for specific style pages
+          styleDropdownDisabled={true}
           onSubmit={() => handleTransliterate(false)}
           onReverseTransliterate={() => handleTransliterate(true)}
           loading={loading}

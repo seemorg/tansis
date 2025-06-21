@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDownWideNarrow } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { TextArea } from "./TextArea";
 import { StyleDropdown } from "./StyleDropdown";
 import { ActionButtons } from "./ActionButtons";
+import { ExamplesSection } from "./ExamplesSection";
 import { TransliterationStyle } from "@/types/transliteration";
 
 interface TransliteratorCardProps {
@@ -15,7 +16,9 @@ interface TransliteratorCardProps {
   style: TransliterationStyle;
   setStyle: (style: TransliterationStyle) => void;
   onSubmit: () => void;
+  onReverseTransliterate: () => void;
   loading: boolean;
+  styleDropdownDisabled?: boolean;
 }
 
 export function TransliteratorCard({
@@ -26,12 +29,13 @@ export function TransliteratorCard({
   style,
   setStyle,
   onSubmit,
+  onReverseTransliterate,
   loading,
+  styleDropdownDisabled = false,
 }: TransliteratorCardProps) {
   const handleSwap = () => {
     if (roman.trim()) {
-      setArabic(roman);
-      setRoman(arabic);
+      onReverseTransliterate();
     }
   };
 
@@ -40,7 +44,7 @@ export function TransliteratorCard({
     setRoman("");
   };
 
-  const canTransliterate = arabic.trim().length > 0 && !loading;
+  const canTransliterate = !loading;
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -52,9 +56,9 @@ export function TransliteratorCard({
       >
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <StyleDropdown value={style} onValueChange={setStyle} />
+          <StyleDropdown value={style} onValueChange={setStyle} disabled={styleDropdownDisabled} />
           <div className="text-lg font-semibold text-neutral-700">
-            Arabic Transliterator
+            Usul Transliteration
           </div>
         </div>
 
@@ -68,6 +72,12 @@ export function TransliteratorCard({
             className="min-h-[120px]"
           />
 
+          {/* Examples Section */}
+          <ExamplesSection
+            style={style}
+            onExampleClick={(arabicText) => setArabic(arabicText)}
+          />
+
           {/* Arrow with rotation animation */}
           <div className="flex justify-center">
             <motion.div
@@ -76,7 +86,7 @@ export function TransliteratorCard({
               className="my-3 text-neutral-400 cursor-pointer hover:text-neutral-600 transition-colors"
               onClick={handleSwap}
             >
-              <ArrowDownWideNarrow className="h-6 w-6" />
+              <ArrowUpDown className="h-6 w-6" />
             </motion.div>
           </div>
 

@@ -23,9 +23,10 @@ import { getAllStyles, getStyleLabel } from "@/lib/styles";
 interface StyleDropdownProps {
   value: TransliterationStyle;
   onValueChange: (value: TransliterationStyle) => void;
+  disabled?: boolean;
 }
 
-export function StyleDropdown({ value, onValueChange }: StyleDropdownProps) {
+export function StyleDropdown({ value, onValueChange, disabled = false }: StyleDropdownProps) {
   const [open, setOpen] = useState(false);
   const styles = getAllStyles();
 
@@ -36,6 +37,7 @@ export function StyleDropdown({ value, onValueChange }: StyleDropdownProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          disabled={disabled}
           className="w-48 justify-between text-sm font-medium"
         >
           {getStyleLabel(value)}

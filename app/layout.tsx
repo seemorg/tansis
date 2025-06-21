@@ -14,10 +14,10 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "Arabic Transliterator",
-  description: "Convert Arabic text to Latin script using various transliteration standards including IJMES, ALA-LC, DIN 31635, and Buckwalter.",
-  keywords: "Arabic, transliteration, IJMES, ALA-LC, DIN, Buckwalter, romanization",
-  authors: [{ name: "Arabic Transliterator" }],
+  title: "Usul Transliteration - Arabic to Latin Script Converter",
+  description: "Convert Arabic text to Latin script using various transliteration standards including IJMES, ALA-LC, DIN 31635, and Buckwalter with Usul Transliteration.",
+  keywords: "Arabic, transliteration, IJMES, ALA-LC, DIN, Buckwalter, romanization, Usul",
+  authors: [{ name: "Usul Transliteration" }],
   viewport: "width=device-width, initial-scale=1",
 };
 

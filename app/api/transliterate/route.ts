@@ -5,7 +5,7 @@ import { TransliterationStyle } from '@/types/transliteration';
 
 export async function POST(req: NextRequest) {
   try {
-    const { text, style } = await req.json();
+    const { text, style, reverse = false } = await req.json();
 
     if (!text || typeof text !== 'string') {
       return NextResponse.json(
@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const systemPrompt = buildPrompt(style as TransliterationStyle);
-    const userPrompt = `Arabic: """${text}"""`;
+    const systemPrompt = buildPrompt(style as TransliterationStyle, reverse);
+    const userPrompt = reverse ? `Romanized: """${text}"""` : `Arabic: """${text}"""`;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",

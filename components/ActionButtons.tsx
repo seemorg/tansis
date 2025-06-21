@@ -119,10 +119,10 @@ export function ActionButtons({
 
       <Button
         onClick={onTransliterate}
-        disabled={disabled || loading}
+        disabled={loading}
         className={cn(
           "inline-flex gap-2 px-5 py-2 rounded-full font-medium shadow-sm",
-          "bg-indigo-600 hover:bg-indigo-700 focus-visible:outline text-white"
+          "bg-[#9d5148] hover:bg-[#8a463d] focus-visible:outline text-white"
         )}
       >
         <Play className="h-4 w-4" />

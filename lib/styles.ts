@@ -72,11 +72,22 @@ Only transliterate the Arabic text - do not translate meaning. Return only the r
   }]
 ]);
 
-export const buildPrompt = (style: TransliterationStyle): string => {
+export const buildPrompt = (style: TransliterationStyle, reverse = false): string => {
   const config = styles.get(style);
   if (!config) {
     throw new Error(`Unknown transliteration style: ${style}`);
   }
+  
+  if (reverse) {
+    return config.prompt.replace(
+      'transliterate Arabic text into Latin script',
+      'convert romanized text back into Arabic script'
+    ).replace(
+      'Only transliterate the Arabic text - do not translate meaning. Return only the romanized result without explanations.',
+      'Only convert the romanized text back to Arabic - do not translate meaning. Return only the Arabic script result without explanations.'
+    );
+  }
+  
   return config.prompt;
 };
 
