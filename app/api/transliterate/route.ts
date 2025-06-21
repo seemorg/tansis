@@ -24,16 +24,53 @@ export async function POST(req: NextRequest) {
     const systemPrompt = buildPrompt(style as TransliterationStyle, reverse);
     const userPrompt = reverse ? `Romanized: """${text}"""` : `Arabic: """${text}"""`;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      temperature: 0,
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
-      ],
-    });
+    let transliteration = "";
 
-    const transliteration = completion.choices[0]?.message.content?.trim() ?? "";
+    if (style === TransliterationStyle.SHARIASOURCE && !reverse) {
+      // SHARIAsource requires a chain of two calls
+      
+      // First call: Apply the SHARIAsource transliteration rules
+      const firstCompletion = await openai.chat.completions.create({
+        model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
+        temperature: 0,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
+        ],
+      });
+
+      const firstResult = firstCompletion.choices[0]?.message.content?.trim() ?? "";
+
+      // Second call: Extract the final transliteration result
+      const secondCompletion = await openai.chat.completions.create({
+        model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
+        temperature: 0,
+        messages: [
+          { 
+            role: "system", 
+            content: "Extract and return only the final transliterated text from the input. Remove any explanations, formatting, or additional text. Return only the clean transliterated result." 
+          },
+          { 
+            role: "user", 
+            content: `Please extract the final transliteration result from this output: """${firstResult}"""` 
+          }
+        ],
+      });
+
+      transliteration = secondCompletion.choices[0]?.message.content?.trim() ?? "";
+    } else {
+      // Standard single call for other styles
+      const completion = await openai.chat.completions.create({
+        model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
+        temperature: 0,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
+        ],
+      });
+
+      transliteration = completion.choices[0]?.message.content?.trim() ?? "";
+    }
 
     return NextResponse.json({ transliteration });
   } catch (error) {
@@ -41,7 +78,7 @@ export async function POST(req: NextRequest) {
     
     if (error instanceof Error && error.message.includes('API key')) {
       return NextResponse.json(
-        { error: 'OpenAI API configuration error' },
+        { error: 'Azure OpenAI API configuration error' },
         { status: 500 }
       );
     }

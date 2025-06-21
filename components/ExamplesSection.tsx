@@ -34,6 +34,11 @@ const examples = {
     { arabic: "ابن سينا", roman: "ibn sina" },
     { arabic: "الأشباه والنظائر", roman: "al-ashbah wa-al-nazair" },
   ],
+  [TransliterationStyle.SHARIASOURCE]: [
+    { arabic: "السلام عليكم", roman: "al-salām ʿalaykum" },
+    { arabic: "ابن سينا", roman: "Ibn Sīnā" },
+    { arabic: "الأشباه والنظائر", roman: "al-Ashbāh wa-al-naẓāʾir" },
+  ],
 };
 
 export function ExamplesSection({ style, onExampleClick, isSwapped = false }: ExamplesSectionProps) {

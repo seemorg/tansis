@@ -3,7 +3,8 @@ export enum TransliterationStyle {
   ALALC = "ALA-LC", 
   DIN = "DIN31635",
   BUCKWALTER = "Buckwalter",
-  CUSTOM = "Custom"
+  CUSTOM = "Custom",
+  SHARIASOURCE = "SHARIAsource"
 }
 
 export interface TransliterationRequest {

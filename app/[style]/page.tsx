@@ -12,6 +12,7 @@ const validStyles: Record<string, TransliterationStyle> = {
   "din-31635": TransliterationStyle.DIN,
   "buckwalter": TransliterationStyle.BUCKWALTER,
   "custom": TransliterationStyle.CUSTOM,
+  "shariasource": TransliterationStyle.SHARIASOURCE,
 };
 
 const styleToPath: Record<TransliterationStyle, string> = {
@@ -20,6 +21,7 @@ const styleToPath: Record<TransliterationStyle, string> = {
   [TransliterationStyle.DIN]: "din-31635",
   [TransliterationStyle.BUCKWALTER]: "buckwalter",
   [TransliterationStyle.CUSTOM]: "custom",
+  [TransliterationStyle.SHARIASOURCE]: "shariasource",
 };
 
 export default function StylePage() {
