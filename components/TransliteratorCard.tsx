@@ -18,7 +18,6 @@ interface TransliteratorCardProps {
   onSubmit: () => void;
   onReverseTransliterate: () => void;
   loading: boolean;
-  styleDropdownDisabled?: boolean;
 }
 
 export function TransliteratorCard({
@@ -31,7 +30,6 @@ export function TransliteratorCard({
   onSubmit,
   onReverseTransliterate,
   loading,
-  styleDropdownDisabled = false,
 }: TransliteratorCardProps) {
   const handleSwap = () => {
     if (roman.trim()) {
@@ -56,7 +54,7 @@ export function TransliteratorCard({
       >
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <StyleDropdown value={style} onValueChange={setStyle} disabled={styleDropdownDisabled} />
+          <StyleDropdown value={style} onValueChange={setStyle} />
           <div className="text-lg font-semibold text-neutral-700">
             Usul Transliteration
           </div>
@@ -75,7 +73,10 @@ export function TransliteratorCard({
           {/* Examples Section */}
           <ExamplesSection
             style={style}
-            onExampleClick={(arabicText) => setArabic(arabicText)}
+            onExampleClick={(arabicText, romanText) => {
+              setArabic(arabicText);
+              setRoman(romanText);
+            }}
           />
 
           {/* Arrow with rotation animation */}

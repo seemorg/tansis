@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { TransliteratorCard } from "@/components/TransliteratorCard";
-import { StyleNavigation } from "@/components/StyleNavigation";
 import { TransliterationStyle } from "@/types/transliteration";
 
 export default function Home() {
@@ -62,7 +61,6 @@ export default function Home() {
             Convert Arabic text to Latin script using various transliteration standards
           </p>
         </div>
-        <StyleNavigation />
         <TransliteratorCard
           arabic={arabic}
           setArabic={setArabic}

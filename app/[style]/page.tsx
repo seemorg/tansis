@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams, notFound, useRouter } from "next/navigation";
 import { TransliteratorCard } from "@/components/TransliteratorCard";
-import { StyleNavigation } from "@/components/StyleNavigation";
 import { TransliterationStyle } from "@/types/transliteration";
 import { getStyleLabel } from "@/lib/styles";
 
@@ -15,8 +14,17 @@ const validStyles: Record<string, TransliterationStyle> = {
   "custom": TransliterationStyle.CUSTOM,
 };
 
+const styleToPath: Record<TransliterationStyle, string> = {
+  [TransliterationStyle.IJMES]: "ijmes",
+  [TransliterationStyle.ALALC]: "ala-lc",
+  [TransliterationStyle.DIN]: "din-31635",
+  [TransliterationStyle.BUCKWALTER]: "buckwalter",
+  [TransliterationStyle.CUSTOM]: "custom",
+};
+
 export default function StylePage() {
   const params = useParams();
+  const router = useRouter();
   const styleParam = params.style as string;
   
   if (!styleParam || !validStyles[styleParam]) {
@@ -67,6 +75,11 @@ export default function StylePage() {
     }
   };
 
+  const handleStyleChange = (newStyle: TransliterationStyle) => {
+    const newPath = styleToPath[newStyle];
+    router.push(`/${newPath}`);
+  };
+
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-200 p-4">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-from)_0%,_var(--tw-gradient-to)_100%)] from-white/20 to-transparent"></div>
@@ -79,15 +92,13 @@ export default function StylePage() {
             Convert Arabic text to Latin script using {styleLabel} standards
           </p>
         </div>
-        <StyleNavigation />
         <TransliteratorCard
           arabic={arabic}
           setArabic={setArabic}
           roman={roman}
           setRoman={setRoman}
           style={currentStyle}
-          setStyle={() => {}} // Disabled for specific style pages
-          styleDropdownDisabled={true}
+          setStyle={handleStyleChange}
           onSubmit={() => handleTransliterate(false)}
           onReverseTransliterate={() => handleTransliterate(true)}
           loading={loading}

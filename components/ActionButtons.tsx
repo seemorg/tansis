@@ -72,13 +72,13 @@ export function ActionButtons({
 
   if (variant === "inline") {
     return (
-      <div className="absolute -top-2 -right-2 flex gap-1">
+      <div className="absolute top-2 right-2 flex gap-1">
         <Button
           size="sm"
           variant="outline"
           onClick={handleCopy}
           disabled={disabled || !copyText.trim()}
-          className="p-2 rounded-full hover:bg-neutral-200 transition"
+          className="h-8 w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
         >
           <Clipboard className="h-4 w-4" />
         </Button>
@@ -87,7 +87,7 @@ export function ActionButtons({
           variant="outline"
           onClick={handleShare}
           disabled={disabled || !shareText.trim()}
-          className="p-2 rounded-full hover:bg-neutral-200 transition"
+          className="h-8 w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
         >
           <Share2 className="h-4 w-4" />
         </Button>
@@ -101,7 +101,7 @@ export function ActionButtons({
         variant="outline"
         onClick={onClear}
         disabled={disabled}
-        className="inline-flex gap-2 px-5 py-2 rounded-full font-medium"
+        className="inline-flex gap-2 px-5 py-2 rounded-full font-medium cursor-pointer"
       >
         <Trash2 className="h-4 w-4" />
         Clear
@@ -111,7 +111,7 @@ export function ActionButtons({
         variant="outline"
         onClick={onSwap}
         disabled={disabled}
-        className="inline-flex gap-2 px-5 py-2 rounded-full font-medium"
+        className="inline-flex gap-2 px-5 py-2 rounded-full font-medium cursor-pointer"
       >
         <RotateCcw className="h-4 w-4" />
         Swap
@@ -121,7 +121,7 @@ export function ActionButtons({
         onClick={onTransliterate}
         disabled={loading}
         className={cn(
-          "inline-flex gap-2 px-5 py-2 rounded-full font-medium shadow-sm",
+          "inline-flex gap-2 px-5 py-2 rounded-full font-medium shadow-sm cursor-pointer",
           "bg-[#9d5148] hover:bg-[#8a463d] focus-visible:outline text-white"
         )}
       >
