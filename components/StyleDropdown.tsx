@@ -28,7 +28,13 @@ interface StyleDropdownProps {
 
 export function StyleDropdown({ value, onValueChange, disabled = false }: StyleDropdownProps) {
   const [open, setOpen] = useState(false);
-  const styles = getAllStyles();
+  const allStyles = getAllStyles();
+  
+  // Temporarily put SHARIAsource first and disable others
+  const styles = [
+    allStyles.find(s => s.value === TransliterationStyle.SHARIASOURCE)!,
+    ...allStyles.filter(s => s.value !== TransliterationStyle.SHARIASOURCE)
+  ];
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -50,24 +56,33 @@ export function StyleDropdown({ value, onValueChange, disabled = false }: StyleD
           <CommandList>
             <CommandEmpty>No style found.</CommandEmpty>
             <CommandGroup>
-              {styles.map((style) => (
-                <CommandItem
-                  key={style.value}
-                  value={style.value}
-                  onSelect={(currentValue) => {
-                    onValueChange(currentValue as TransliterationStyle);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
+              {styles.map((style) => {
+                const isDisabled = style.value !== TransliterationStyle.SHARIASOURCE;
+                return (
+                  <CommandItem
+                    key={style.value}
+                    value={style.value}
+                    disabled={isDisabled}
+                    onSelect={(currentValue) => {
+                      if (!isDisabled) {
+                        onValueChange(currentValue as TransliterationStyle);
+                        setOpen(false);
+                      }
+                    }}
                     className={cn(
-                      "mr-2 h-4 w-4",
-                      value === style.value ? "opacity-100" : "opacity-0"
+                      isDisabled && "opacity-50 cursor-not-allowed"
                     )}
-                  />
-                  {style.label}
-                </CommandItem>
-              ))}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === style.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {style.label}
+                  </CommandItem>
+                );
+              })}
             </CommandGroup>
           </CommandList>
         </Command>
