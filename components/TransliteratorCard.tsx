@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeftRight } from "lucide-react";
+import { ArrowDownWideNarrow } from "lucide-react";
 import { TextArea } from "./TextArea";
 import { StyleDropdown } from "./StyleDropdown";
 import { ActionButtons } from "./ActionButtons";
@@ -91,10 +91,9 @@ export function TransliteratorCard({
             <motion.div
               animate={{ rotate: loading ? 180 : 0 }}
               transition={{ duration: 0.3 }}
-              className="my-3 text-neutral-400 cursor-pointer hover:text-neutral-600 transition-colors"
-              onClick={handleSwap}
+              className="my-3 text-neutral-400"
             >
-              <ArrowLeftRight className="h-6 w-6" />
+              <ArrowDownWideNarrow className="h-6 w-6" />
             </motion.div>
           </div>
 
@@ -123,6 +122,7 @@ export function TransliteratorCard({
                 copyText={roman}
                 shareText={roman}
                 disabled={loading}
+                isSwapped={isSwapped}
               />
             )}
           </div>

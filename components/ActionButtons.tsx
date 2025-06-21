@@ -16,6 +16,7 @@ interface ActionButtonsProps {
   shareText?: string;
   disabled?: boolean;
   loading?: boolean;
+  isSwapped?: boolean;
 }
 
 export function ActionButtons({
@@ -29,6 +30,7 @@ export function ActionButtons({
   shareText = "",
   disabled = false,
   loading = false,
+  isSwapped = false,
 }: ActionButtonsProps) {
   const handleCopy = async () => {
     if (!copyText.trim()) {
@@ -72,7 +74,7 @@ export function ActionButtons({
 
   if (variant === "inline") {
     return (
-      <div className="absolute top-2 right-2 flex gap-1">
+      <div className={`absolute top-2 ${isSwapped ? 'left-2' : 'right-2'} flex gap-1`}>
         <Button
           size="sm"
           variant="outline"
