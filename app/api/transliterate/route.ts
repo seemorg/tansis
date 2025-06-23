@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { openai } from '@/lib/openai';
+import { openai, createDirectOpenAI } from '@/lib/openai';
 import { buildPrompt, getAllStyles } from '@/lib/styles';
 import { TransliterationStyle } from '@/types/transliteration';
 
@@ -27,14 +27,11 @@ export async function POST(req: NextRequest) {
     let transliteration = "";
 
     if (style === TransliterationStyle.SHARIASOURCE && !reverse) {
-      // SHARIAsource with retry logic and regex cleanup
-      const temperatures = [0, 0.3, 0.7];
-      let result = "";
-      
-      for (const temperature of temperatures) {
+      // Try Azure OpenAI first, fallback to direct OpenAI if it fails
+      try {
         const completion = await openai.chat.completions.create({
           model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
-          temperature,
+          temperature: 0,
           messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: userPrompt }
@@ -48,16 +45,40 @@ export async function POST(req: NextRequest) {
           presence_penalty: 0
         });
 
-        result = completion.choices[0]?.message.content?.trim() ?? "";
+        const result = completion.choices[0]?.message.content?.trim() ?? "";
         
-        // If we get a non-empty result, break out of the loop
-        if (result.length > 0) {
-          break;
+        // If Azure OpenAI fails to return a result, throw to trigger fallback
+        if (result.length === 0) {
+          throw new Error("Azure OpenAI returned empty result");
         }
+        
+        // Remove asterisks used for italicization in the output
+        transliteration = result.replace(/\*/g, '');
+      } catch (azureError) {
+        console.log('Azure OpenAI failed, falling back to OpenAI directly:', azureError);
+        
+        // Fallback to direct OpenAI
+        const directClient = createDirectOpenAI();
+        const completion = await directClient.chat.completions.create({
+          model: "gpt-4.1",
+          temperature: 0,
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt }
+          ],
+          response_format: {
+            "type": "text"
+          },
+          max_completion_tokens: 2048,
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0
+        });
+
+        const result = completion.choices[0]?.message.content?.trim() ?? "";
+        // Remove asterisks used for italicization in the output
+        transliteration = result.replace(/\*/g, '');
       }
-      
-      // Remove asterisks used for italicization in the output
-      transliteration = result.replace(/\*/g, '');
     } else {
       // Standard single call for other styles
       const completion = await openai.chat.completions.create({

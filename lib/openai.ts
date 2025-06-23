@@ -1,4 +1,4 @@
-import { AzureOpenAI } from 'openai';
+import { AzureOpenAI, OpenAI } from 'openai';
 
 if (!process.env.AZURE_SECRET_KEY) {
   throw new Error('Missing AZURE_SECRET_KEY environment variable');
@@ -13,3 +13,12 @@ export const openai = new AzureOpenAI({
   endpoint: process.env.AZURE_ENDPOINT_URL,
   apiVersion: '2024-10-21',
 });
+
+export const createDirectOpenAI = () => {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('Missing OPENAI_API_KEY environment variable');
+  }
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+};
