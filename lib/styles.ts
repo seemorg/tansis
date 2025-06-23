@@ -108,6 +108,7 @@ Never assimilate the l of al- to a "sun letter".
     •    Use bt. for bint ("daughter of") بنت
     2.    Write Ibn/Bint in full when the figure is best known that way: Ibn Ḥanbal.
     3.    Inflect Abū after ibn/bin: ʿAlī b. Abī Ṭālib (not b. Abū).
+    4.    If Ibn is at the beginning of the name, it should be spelled out in Full (Ibn) and capitalized. 
 
 ⸻
 
