@@ -74,12 +74,12 @@ export function ActionButtons({
 
   if (variant === "inline") {
     return (
-      <div className={`absolute top-2 ${isSwapped ? 'left-2' : 'right-2'} flex gap-1`}>
+      <div className="absolute top-0 right-6 transform -translate-y-1/2 flex gap-1">
         <Button
           size="sm"
           variant="outline"
           onClick={handleCopy}
-          disabled={disabled || !copyText.trim()}
+          disabled={!copyText.trim()}
           className="h-7 w-7 sm:h-8 sm:w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
         >
           <Clipboard className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -88,7 +88,7 @@ export function ActionButtons({
           size="sm"
           variant="outline"
           onClick={handleShare}
-          disabled={disabled || !shareText.trim()}
+          disabled={!shareText.trim()}
           className="h-7 w-7 sm:h-8 sm:w-8 rounded-full hover:bg-neutral-200 transition-colors cursor-pointer"
         >
           <Share2 className="h-3 w-3 sm:h-4 sm:w-4" />
