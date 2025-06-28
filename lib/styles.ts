@@ -87,16 +87,27 @@ Follow every rule below exactly; if two rules conflict, apply the more specific 
     •    Place-names like Mecca, Medina, Iraq.
     3.    Italicisation – Italicise every foreign-language word you transliterate (ḥadīth, sharīʿa, ijmāʿ, qāḍī).
 (If your output medium cannot render italics, wrap terms in asterisks: *ḥadīth*.)
-    4.    Capitalise names of people. 
+    4.    Capitalisation rules:
+    •    Capitalize the first word of any transliterated text or sentence.
+    •    Capitalize personal names and honorifics (al-Sunna, al-Riḍā, al-Mahdī).
+    •    Capitalize proper nouns and geographical names.
+    •    Use lowercase for common nouns, particles, and articles unless they begin a sentence. 
 
 ⸻
 
 2. Definite article & prefixes
 
+Connect the definite article al- to what follows with a hyphen. Note the exceptional treatment of prepositions: li-, wa-, ka-, and bi-, but not fa- [because it does not normally connect to nouns].
+
+ALWAYS use the ʾ character (U+02BE) for hamza in contractions, never straight apostrophe (').
+
 Case    Write    Never write
 Definite article    al-naẓāʾir    an-naẓāʾir
-Particle + al-    lil-Shirbīnī, waʾl-naẓāʾir, kaʾl-maʿrūf, biʾl-shubahāt    li al-… / wa al-… / etc.
-Particle fa-    fa-man, fa-yaqḍī    fa-al-…
+li- + definite article    lil-Shirbīnī    li-al-Shirbīnī or li al-Shirbīnī or li'l-Shirbīnī
+wa- + definite article    waʾl-naẓāʾir    wa-al-naẓāʾir or wa al-naẓāʾir or wa'l-naẓāʾir
+bi- + definite article    biʾl-shubahāt    bi-al-shubahāt or bi'l-shubahāt
+ka- + definite article    kaʾl-maʿrūf    ka-al-maʿrūf or ka'l-maʿrūf
+Particle fa-    fa-man, li-faqīh, wa-yabqā    fa-al-…
 
 Never assimilate the l of al- to a "sun letter".
 
@@ -108,7 +119,9 @@ Never assimilate the l of al- to a "sun letter".
     •    Use bt. for bint ("daughter of") بنت
     2.    Write Ibn/Bint in full when the figure is best known that way: Ibn Ḥanbal.
     3.    Inflect Abū after ibn/bin: ʿAlī b. Abī Ṭālib (not b. Abū).
-    4.    If Ibn is at the beginning of the name, it should be spelled out in Full (Ibn) and capitalized. 
+    4.    If Ibn is at the beginning of the name, it should be spelled out in Full (Ibn) and capitalized.
+    5.    When Abū, Dhū, or similar names are followed by a word with the definite article al-, contract them to Abūʾl-, Dhūʾl-, etc.; do not write Abū al- or Dhū al- unless the phrase is not a compound laqab.
+    6.    Always capitalize personal names and honorifics, including titles like al-Sunna, al-Riḍā, and al-Mahdī. 
 
 ⸻
 
@@ -139,6 +152,7 @@ Arabic letter    Transliteration
     •    Drop vocalic endings on pronominal suffixes unless inherent (ḥayātuh, ḥayātuhā).
     •    Keep endings on stand-alone pronouns/prepositions: huwa, hiya, anna, annahā, mimmā, mimman.
     •    Never insert an apostrophe to split consonants: Qalʿahji, Shaykhzada.
+    •    Do not insert commas between nisbas or parts of a name unless disambiguation is required.
 
 ⸻
 
