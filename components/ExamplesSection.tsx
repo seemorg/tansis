@@ -35,9 +35,9 @@ const examples = {
     { arabic: "الأشباه والنظائر", roman: "al-ashbah wa-al-nazair" },
   ],
   [TransliterationStyle.SHARIASOURCE]: [
-    { arabic: "السلام عليكم", roman: "al-salām ʿalaykum" },
+    { arabic: "السلام عليكم", roman: "Al-salām ʿalaykum" },
     { arabic: "ابن سينا", roman: "Ibn Sīnā" },
-    { arabic: "الأشباه والنظائر", roman: "al-ashbāh waʾl-naẓāʾir" },
+    { arabic: "الأشباه والنظائر", roman: "al-Ashbāh waʾl-naẓāʾir" },
   ],
 };
 

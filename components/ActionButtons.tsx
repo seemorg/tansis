@@ -16,7 +16,6 @@ interface ActionButtonsProps {
   shareText?: string;
   disabled?: boolean;
   loading?: boolean;
-  isSwapped?: boolean;
 }
 
 export function ActionButtons({
@@ -30,7 +29,6 @@ export function ActionButtons({
   shareText = "",
   disabled = false,
   loading = false,
-  isSwapped = false,
 }: ActionButtonsProps) {
   const handleCopy = async () => {
     if (!copyText.trim()) {

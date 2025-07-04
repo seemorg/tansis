@@ -124,7 +124,6 @@ export function TransliteratorCard({
                 copyText={roman}
                 shareText={roman}
                 disabled={loading}
-                isSwapped={isSwapped}
               />
             )}
           </div>
