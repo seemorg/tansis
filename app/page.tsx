@@ -14,8 +14,14 @@ export default function Home() {
   const [isSwapped, setIsSwapped] = useState(false);
 
   const handleTransliterate = async (reverse = false) => {
-    const inputText = reverse ? roman : arabic;
+    // When swapped, input is always in arabic state and output goes to roman state
+    // When not swapped, use the reverse parameter to determine direction
+    const inputText = isSwapped ? arabic : (reverse ? roman : arabic);
     if (!inputText.trim()) return;
+
+    // When swapped, we want reverse transliteration (roman to arabic)
+    // When not swapped, use the reverse parameter
+    const shouldReverse = isSwapped ? true : reverse;
 
     setLoading(true);
     try {
@@ -24,7 +30,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text: inputText, style, reverse }),
+        body: JSON.stringify({ text: inputText, style, reverse: shouldReverse }),
       });
 
       if (!response.ok) {
@@ -32,7 +38,12 @@ export default function Home() {
       }
 
       const data = await response.json();
-      if (reverse) {
+      
+      // When swapped, output always goes to roman state
+      // When not swapped, use the reverse parameter to determine where output goes
+      if (isSwapped) {
+        setRoman(data.transliteration);
+      } else if (reverse) {
         setArabic(data.transliteration);
       } else {
         setRoman(data.transliteration);
@@ -40,7 +51,12 @@ export default function Home() {
     } catch (error) {
       console.error("Transliteration error:", error);
       const errorMessage = "Error: Failed to transliterate text";
-      if (reverse) {
+      
+      // When swapped, error always goes to roman state
+      // When not swapped, use the reverse parameter to determine where error goes
+      if (isSwapped) {
+        setRoman(errorMessage);
+      } else if (reverse) {
         setArabic(errorMessage);
       } else {
         setRoman(errorMessage);
