@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { openai, createDirectOpenAI } from '@/lib/openai';
+import { openai, createDirectOpenAI, createAzureOpenAI } from '@/lib/openai';
 import { buildPrompt, getAllStyles } from '@/lib/styles';
 import { TransliterationStyle } from '@/types/transliteration';
 
@@ -25,11 +25,40 @@ export async function POST(req: NextRequest) {
     const userPrompt = reverse ? `Romanized: ${text}` : `${text}`;
 
     let transliteration = "";
+    
+    // Check if we should use direct OpenAI for all requests
+    const useDirectOpenAI = !openai && process.env.OPENAI_API_KEY;
 
-    if (style === TransliterationStyle.SHARIASOURCE && !reverse) {
+    if (useDirectOpenAI) {
+      // Use direct OpenAI for all styles when Azure is not configured
+      const directClient = createDirectOpenAI();
+      const model = style === TransliterationStyle.SHARIASOURCE && !reverse ? "gpt-4.1" : "gpt-4";
+      
+      const completion = await directClient.chat.completions.create({
+        model,
+        temperature: 0,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
+        ],
+        ...(style === TransliterationStyle.SHARIASOURCE && !reverse ? {
+          response_format: { "type": "text" },
+          max_completion_tokens: 2048,
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0
+        } : {})
+      });
+
+      const result = completion.choices[0]?.message.content?.trim() ?? "";
+      transliteration = style === TransliterationStyle.SHARIASOURCE && !reverse 
+        ? result.replace(/\*/g, '') 
+        : result;
+    } else if (style === TransliterationStyle.SHARIASOURCE && !reverse) {
       // Try Azure OpenAI first, fallback to direct OpenAI if it fails
       try {
-        const completion = await openai.chat.completions.create({
+        const azureClient = openai || createAzureOpenAI();
+        const completion = await azureClient.chat.completions.create({
           model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
           temperature: 0,
           messages: [
@@ -81,7 +110,8 @@ export async function POST(req: NextRequest) {
       }
     } else {
       // Standard single call for other styles
-      const completion = await openai.chat.completions.create({
+      const azureClient = openai || createAzureOpenAI();
+      const completion = await azureClient.chat.completions.create({
         model: process.env.AZURE_4_1_DEPLOYMENT || "snapsolve-gpt4.1",
         temperature: 0,
         messages: [
