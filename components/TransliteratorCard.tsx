@@ -65,7 +65,7 @@ export function TransliteratorCard({
   return (
     <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl mx-auto">
       <div
-        className="bg-transparent sm:bg-white/70 sm:backdrop-blur-sm rounded-none sm:rounded-2xl md:rounded-3xl shadow-none sm:shadow-lg p-0 sm:p-6 md:p-8"
+        className="bg-transparent sm:bg-white sm:backdrop-blur-sm rounded-none sm:rounded-2xl md:rounded-3xl shadow-none sm:shadow-lg p-0 sm:p-6 md:p-8"
       >
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 gap-3 sm:gap-0">

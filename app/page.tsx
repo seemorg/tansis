@@ -68,13 +68,24 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex items-start sm:items-center justify-center bg-white sm:bg-gradient-to-br sm:from-neutral-50 sm:via-neutral-100 sm:to-neutral-200 p-4 md:p-6 pt-8 sm:pt-4">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-from)_0%,_var(--tw-gradient-to)_100%)] from-white/20 to-transparent hidden sm:block"></div>
+      <div className="absolute inset-0 bg-[#9d5148] from-white/20 to-transparent hidden sm:block">
+        <div 
+          style={{
+            backgroundImage: `url("/pattern.svg")`,
+            backgroundSize: "20%",
+            opacity: 0.2,
+            maskImage: "linear-gradient(to bottom, black 0%, black 50%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 50%, transparent 100%)",
+          }}
+          className="absolute inset-0"
+        ></div>
+      </div>
       <div className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl">
         <div className="text-center mb-6 md:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-800 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Tansis AI
           </h1>
-          <p className="text-sm sm:text-base text-neutral-600 px-2">
+          <p className="text-sm sm:text-base text-white px-2">
             Convert Arabic or plain text to translitered English
           </p>
         </div>
